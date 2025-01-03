@@ -1,14 +1,19 @@
 CREATE VIEW vw_OrderDetails AS
 SELECT 
     o.order_id,
-    o.user_id,
-    o.status,
+    u.name + ' ' + u.surname AS person,
+    STRING_AGG(
+        p.title + ' ' + CAST(p.price AS NVARCHAR) + ' * ' + CAST(od.quantity AS NVARCHAR), '|'
+    ) AS product_id,
     o.total_price,
-    od.product_id,
-    p.title AS product_name,
-    od.quantity,
-    p.price AS unit_price,
-    (od.quantity * p.price) AS total_product_price
+    o.status
 FROM Orders o
-INNER JOIN OrderDetails od ON o.order_id = od.order_id
-INNER JOIN Products p ON od.product_id = p.product_id;
+JOIN Users u ON u.user_id = o.user_id
+JOIN OrderDetails od ON o.order_id = od.order_id
+JOIN Products p ON od.product_id = p.product_id
+GROUP BY
+    o.order_id.
+    u.name,
+    u.surname,
+    o.total_price,
+    o.status

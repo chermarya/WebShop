@@ -13,6 +13,9 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/users', require('./routes/user'));
+app.use('/api/products', require('./routes/product'));
+app.use('/api/categories', require('./routes/category'));
+app.use('/api/orders', require('./routes/vwOrderDetails'));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
