@@ -5,7 +5,7 @@ SELECT
     o.status,
     o.total_price,
     od.product_id,
-    p.name AS product_name,
+    p.title AS product_name,
     od.quantity,
     p.price AS unit_price,
     (od.quantity * p.price) AS total_product_price
