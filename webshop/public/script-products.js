@@ -40,3 +40,5 @@ async function fetchProducts() {
         }
     }
 }
+
+fetchProducts();

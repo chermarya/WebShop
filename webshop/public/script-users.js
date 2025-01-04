@@ -25,6 +25,9 @@ async function fetchUsers() {
                 <td>${user.name || 'N/A'}</td>
                 <td>${user.surname || 'N/A'}</td>
                 <td>${user.email || 'N/A'}</td>
+                <td>
+                    <button class="delete-button" onclick="deleteUser(${user.user_id})">Delete</button>
+                </td>
             </tr>
         `).join('');
     } catch (error) {
@@ -56,13 +59,33 @@ document.getElementById('add-user-form').addEventListener('submit', async (e) =>
         }
 
         alert('User added successfully!');
-        fetchUsers(); // Обновляем таблицу
-        document.getElementById('add-user-form').reset(); // Очищаем форму
+        fetchUsers();
+        document.getElementById('add-user-form').reset();
     } catch (error) {
         console.error('Error adding user:', error);
         alert(`Error adding user: ${error.message}`);
     }
 });
 
-// Загрузка списка пользователей при открытии страницы
+async function deleteUser(userId) {
+    if (!confirm('Are you sure you want to delete this user?')) return;
+
+    try {
+        const response = await fetch(`/api/users/delUserById/${userId}`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || response.statusText);
+        }
+
+        alert('User deleted successfully!');
+        fetchUsers();
+    } catch (error) {
+        console.error(`Error deleting user ${userId}:`, error);
+        alert(`Error deleting user: ${error.message}`);
+    }
+}
+
 fetchUsers();

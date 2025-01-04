@@ -96,7 +96,6 @@ table tbody tr:nth-child(even) {
     background: #f9f9f9;
 }
 
-/* Выпадающий список */
 select {
     padding: 10px;
     border-radius: 5px;
@@ -114,7 +113,6 @@ select:focus {
     outline: none;
 }
 
-/* Кнопка сохранить */
 button.save-button {
     padding: 10px 15px;
     background-color: #28a745;
@@ -130,7 +128,6 @@ button.save-button:hover {
     background-color: #218838;
 }
 
-/* Форма добавления пользователя */
 .form-container {
     margin-top: 20px;
     padding: 20px;
@@ -176,3 +173,17 @@ button.save-button:hover {
     background-color: #218838;
 }
 
+.delete-button {
+    padding: 5px 10px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
+}

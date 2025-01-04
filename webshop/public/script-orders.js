@@ -98,5 +98,4 @@ async function updateOrderStatus(orderId) {
     }
 }
 
-
-
+fetchOrders();
