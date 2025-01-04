@@ -2,7 +2,6 @@ async function fetchUsers() {
     try {
         const response = await fetch('/api/users/getAllUsers');
 
-        // Логируем статус ответа
         console.log('Fetching users, status:', response.status);
 
         if (!response.ok) {
@@ -10,7 +9,7 @@ async function fetchUsers() {
         }
 
         const users = await response.json();
-        console.log('Fetched users:', users); // Выводим полученные данные
+        console.log('Fetched users:', users);
 
         const table = document.querySelector('#users-table tbody');
         if (!table) throw new Error('Users table not found in DOM');

@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabs = document.querySelectorAll('.tab-button');
     const contentDiv = document.getElementById('content');
 
-    // Функция для загрузки HTML-контента
     async function loadContent(tab) {
         try {
             console.log(`Loading content for tab: ${tab}`);
@@ -32,5 +31,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    loadContent('users'); // Загрузка первой вкладки
+    loadContent('users');
 });

@@ -1,13 +1,13 @@
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #8e44ad, #3498db); /* Осветленный градиент */
+    background: linear-gradient(to right, #8e44ad, #3498db);
     margin: 0;
     padding: 0;
     color: #333;
 }
 
 .container {
-    max-width: 1400px; /* Увеличенная ширина */
+    max-width: 1400px;
     margin: 40px auto;
     background: #fff;
     padding: 20px;
@@ -36,7 +36,7 @@ h1 {
     padding: 15px 20px;
     cursor: pointer;
     border: none;
-    background: #d6d6d6; /* Светло-серый */
+    background: #d6d6d6;
     color: #555;
     font-size: 18px;
     font-weight: bold;
@@ -45,12 +45,12 @@ h1 {
 }
 
 .tab-button.active {
-    background: #3498db; /* Осветленный синий */
+    background: #3498db;
     color: #fff;
 }
 
 .tab-button:hover {
-    background: #8e44ad; /* Осветленный фиолетовый */
+    background: #8e44ad;
     color: #fff;
 }
 
@@ -71,7 +71,7 @@ h1 {
 }
 
 .fetch-button:hover {
-    background-color: #218838; /* Осветленный зеленый */
+    background-color: #218838;
 }
 
 table {
@@ -88,10 +88,10 @@ table th, table td {
 }
 
 table th {
-    background: #e8e8e8; /* Светлый серый для заголовков */
+    background: #e8e8e8;
     font-weight: bold;
 }
 
 table tbody tr:nth-child(even) {
-    background: #f9f9f9; /* Легкий фон для четных строк */
+    background: #f9f9f9;
 }

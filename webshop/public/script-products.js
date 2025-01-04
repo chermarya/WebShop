@@ -8,9 +8,8 @@ async function fetchProducts() {
         }
 
         let data = await response.json();
-        console.log('Fetched products:', data); // Логируем полученные данные
+        console.log('Fetched products:', data);
 
-        // Извлекаем массив продуктов из ключа `products`
         const products = data.products;
         if (!Array.isArray(products)) {
             throw new Error('Invalid products data format: "products" is not an array');
