@@ -19,7 +19,7 @@ router.get("/getCategoryById/:categoryid", async (req, res) => {
         const category = await Category.findOne({where:{category_id:category_id}})
 
         if (!category) {
-            return res.status(404).json({error: "User not found"});
+            return res.status(404).json({error: "Category not found"});
         }
         res.json(category)
     } catch (error) {
@@ -74,12 +74,12 @@ router.delete("/delCategoryById/:categoryid", async (req, res) => {
         const category_id = req.params.categoryid;
         const category = await Category.findByPk(category_id);
         if (!category) {
-            return res.status(404).json({ error: "User not found" });
+            return res.status(404).json({ error: "Category not found" });
         }
 
         await category.destroy();
 
-        res.status(200).json({ message: `User with ID ${category_id} deleted successfully` });
+        res.status(200).json({ message: `Category with ID ${category_id} deleted successfully` });
     } catch (error) {
         console.log(`Error: ${error}`);
     }

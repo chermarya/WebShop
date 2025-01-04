@@ -12,6 +12,7 @@ connectDB();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// маршрути
 app.use('/api/users', require('./routes/user'));
 app.use('/api/products', require('./routes/product'));
 app.use('/api/categories', require('./routes/category'));

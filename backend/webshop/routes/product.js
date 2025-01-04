@@ -116,17 +116,32 @@ router.post("/addProduct", async (req, res) => {
             return res.status(400).json({ error: "Price and quantity must be greater than 0" });
         }
 
-        const category = await Category.findByPk(category_id);
-        if (!category) {
+        const category = await sequelize.query(
+            `SELECT * FROM Categories WHERE category_id = :category_id`,
+            {
+                replacements: { category_id },
+            }
+        );
+
+        if (category.length === 0) {
             return res.status(404).json({ error: "Category not found" });
         }
 
-        const newProduct = await Product.create({
-            title: title,
-            category_id: category_id,
-            price: price,
-            quantity: quantity,
-        });
+        const [newProduct] = await sequelize.query(
+            `
+            INSERT INTO Products (title, category_id, price, quantity)
+            OUTPUT INSERTED.*
+            VALUES (:title, :category_id, :price, :quantity)
+            `,
+            {
+                replacements: {
+                    title,
+                    category_id,
+                    price,
+                    quantity,
+                },
+            }
+        );
 
         res.status(201).json({ message: "Product created successfully", product: newProduct });
     } catch (error) {
@@ -148,42 +163,90 @@ router.put("/updateProduct/:productid", async (req, res) => {
             return res.status(400).json({ error: "Price and quantity must be greater than 0" });
         }
 
-        const category = await Category.findByPk(category_id);
-        if (!category) {
+        const category = await sequelize.query(
+            `SELECT * FROM Categories WHERE category_id = :category_id`,
+            {
+                replacements: { category_id },
+            }
+        );
+
+        if (category.length === 0) {
             return res.status(404).json({ error: "Category not found" });
         }
 
-        const product = await Product.findByPk(product_id);
-        if (!product) {
+        const product = await sequelize.query(
+            `SELECT * FROM Products WHERE product_id = :product_id`,
+            {
+                replacements: { product_id },
+            }
+        );
+
+        if (product.length === 0) {
             return res.status(404).json({ error: "Product not found" });
         }
 
-        await product.update({
-            title: title || product.title,
-            category_id: category_id || product.category_id,
-            price: price || product.price,
-            quantity: quantity || product.quantity,
-        });
+        await sequelize.query(
+            `
+            UPDATE Products
+            SET 
+                title = :title,
+                category_id = :category_id,
+                price = :price,
+                quantity = :quantity
+            WHERE product_id = :product_id
+            `,
+            {
+                replacements: {
+                    title,
+                    category_id,
+                    price,
+                    quantity,
+                    product_id,
+                },
+            }
+        );
 
-        res.status(200).json({ message: "Product updated successfully", product:product });
+        const [updatedProduct] = await sequelize.query(
+            `SELECT * FROM Products WHERE product_id = :product_id`,
+            {
+                replacements: { product_id },
+                type: sequelize.QueryTypes.SELECT,
+            }
+        );
+
+        res.status(200).json({ message: "Product updated successfully", product: updatedProduct });
     } catch (error) {
-        console.log(`Error: ${error}`);
+        console.error(`Error updating product: ${error.message}`);
+        res.status(500).json({ error: "An error occurred while updating the product" });
     }
 })
 
 router.delete("/delProductById/:productid", async (req, res) => {
     try {
         const product_id = req.params.productid;
-        const product = await Product.findByPk(product_id);
+
+        const [product] = await sequelize.query(
+            `SELECT * FROM Products WHERE product_id = :product_id`,
+            {
+                replacements: { product_id },
+            }
+        );
+
         if (!product) {
             return res.status(404).json({ error: "Product not found" });
         }
 
-        await product.destroy();
+        await sequelize.query(
+            `DELETE FROM Products WHERE product_id = :product_id`,
+            {
+                replacements: { product_id },
+            }
+        );
 
         res.status(200).json({ message: `Product with ID ${product_id} deleted successfully` });
     } catch (error) {
-        console.log(`Error: ${error}`);
+        console.error(`Error deleting product: ${error.message}`);
+        res.status(500).json({ error: "An error occurred while deleting the product" });
     }
 })
 

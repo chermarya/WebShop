@@ -91,4 +91,35 @@ router.post("/addProductsToOrder", async (req, res) => {
     }
 });
 
+router.delete("/delOrder/:orderid", async (req, res) => {
+    const transaction = await sequelize.transaction();
+    try {
+        const order_id = req.params.orderid;
+
+        const order = await sequelize.query(
+            `SELECT * FROM Orders WHERE order_id = :order_id`,
+            { replacements: { order_id }, type: sequelize.QueryTypes.SELECT }
+        );
+
+        if (!order.length) {
+            return res.status(404).json({ error: "Order not found" });
+        }
+
+        await sequelize.query(`DELETE FROM Orders WHERE order_id = :order_id`, {
+            replacements: { order_id },
+            transaction,
+        });
+
+        await transaction.commit();
+        res.status(200).json({ message: "Order deleted successfully" });
+    } catch (error) {
+        await transaction.rollback();
+        console.error(`Error deleting order: ${error.message}`);
+        res.status(500).json({ error: "An error occurred while deleting the order" });
+    }
+});
+
+module.exports = router;
+
+
 module.exports = router;

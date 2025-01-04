@@ -15,7 +15,8 @@ const OrderDetail = sequelize.define('OrderDetails', {
         references: {
             model: Order,
             key: 'order_id',
-        }
+        },
+        onDelete: 'CASCADE'
     },
     product_id: {
         type: DataTypes.INTEGER,
