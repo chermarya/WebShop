@@ -95,3 +95,37 @@ table th {
 table tbody tr:nth-child(even) {
     background: #f9f9f9;
 }
+
+/* Выпадающий список */
+select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    background: #f8f8f8;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+select:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Кнопка сохранить */
+button.save-button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+button.save-button:hover {
+    background-color: #218838;
+}
