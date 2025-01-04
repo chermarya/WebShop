@@ -1,5 +1,4 @@
 const { DataTypes } = require('sequelize');
-const Category = require("../models/Category");
 const { sequelize } = require('../config/database');
 
 const Product = sequelize.define('Product', {
@@ -12,15 +11,9 @@ const Product = sequelize.define('Product', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    category_id: {
-        type: DataTypes.INTEGER,
+    category: {
+        type: DataTypes.STRING,
         allowNull: false,
-        references: {
-            model: Category,
-            key: 'category_id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
     },
     price: {
         type: DataTypes.DECIMAL,

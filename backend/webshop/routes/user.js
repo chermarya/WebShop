@@ -15,10 +15,8 @@ router.get("/getAllUsers", async (req, res) => {
 router.get("/getUserById/:userid", async (req, res) => {
     try {
         const user_id = req.params.userid;
-        // const user = await sequelize.query(`SELECT * FROM Users WHERE user_id = :id`, {
-        //     replacements: {id:user_id},
-        // });
         const user = await User.findOne({where:{user_id:user_id}})
+
         if (!user) {
             return res.status(404).json({error: "User not found"});
         }
@@ -33,7 +31,7 @@ router.post("/addUser", async (req, res) => {
         const { name, surname, email } = req.body;
 
         if (!name || !surname || !email) {
-            return res.status(400).json({ error: "All fields (name, surname, email) are required" });
+            return res.status(400).json({ error: "All fields are required" });
         }
 
         const newUser = await User.create({
